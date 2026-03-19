@@ -2,7 +2,7 @@ pipeline {
     agent any
 
    steps {
-    step (git pull) {
+    step (git clone) {
         git branch: 'main', url: 'https://github.com/himanshupotpose/cbz-infra-ec2.tf.git'
     }
     step (terraform init) {
