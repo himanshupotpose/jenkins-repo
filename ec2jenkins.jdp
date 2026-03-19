@@ -1,0 +1,20 @@
+pipeline { 
+    agent any
+
+   steps {
+    step (git pull) {
+        git branch: 'main', url: 'https://github.com/himanshupotpose/cbz-infra-ec2.tf.git'
+    }
+    step (terraform init) {
+        sh '''terraform init
+                terraform plan'''
+    }
+    step (approve) {
+        input 'approval needed'
+    }
+    step (terraform apply) {
+        sh 'terraform apply --auto-approve'
+   }
+
+}
+}
