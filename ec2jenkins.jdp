@@ -2,17 +2,17 @@ pipeline {
     agent any
 
    steps {
-    step (git clone) {
+    step ('git clone') {
         git branch: 'main', url: 'https://github.com/himanshupotpose/cbz-infra-ec2.tf.git'
     }
-    step (terraform init) {
+    step ('terraform init') {
         sh '''terraform init
                 terraform plan'''
     }
-    step (approve) {
+    step ('approve') {
         input 'approval needed'
     }
-    step (terraform apply) {
+    step ('terraform apply') {
         sh 'terraform apply --auto-approve'
    }
 
