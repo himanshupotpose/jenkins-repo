@@ -12,7 +12,7 @@ pipeline {
     stage('terraform init') {
         steps {
             sh '''terraform init
-                    terraform plan  -var-file"./vars/test.tfvar" '''
+                    terraform plan  -var-file="./vars/test.tfvar" '''
         }
     }
     stage('approve') {
@@ -23,7 +23,7 @@ pipeline {
     stage('terraform apply') {
         steps {
             timeout(activity: true, time: 30){
-            sh 'terraform apply  -var-file"./vars/test.tfvar" --auto-approve'
+            sh 'terraform apply  -var-file="./vars/test.tfvar" --auto-approve'
             }
         }
     }
