@@ -6,13 +6,13 @@ pipeline {
    
     stage('git clone') {
         steps{
-        git branch: 'main', url: 'https://github.com/himanshupotpose/cbz-infra-ec2.tf.git'
+        git branch: 'main', url: 'https://github.com/himanshupotpose/terraformodule.git'
         }
     }
     stage('terraform init') {
         steps {
             sh '''terraform init
-                    terraform plan'''
+                    terraform plan  -var-file"./vars/test.tfvar'''
         }
     }
     stage('approve') {
@@ -22,15 +22,13 @@ pipeline {
     }
     stage('terraform apply') {
         steps {
-            sh 'terraform apply --auto-approve'
+            timeout(activity: true, time: 30){
+            sh 'terraform apply  -var-file"./vars/test.tfvar" --auto-approve'
+            }
         }
     }
 
     }
-    stage('terraform destroy') {
-        steps {
-            sh 'terraform destroy --auto-approve'
-        }
-    }
+  
 
 }
